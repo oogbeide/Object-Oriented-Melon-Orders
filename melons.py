@@ -1,3 +1,5 @@
+from random import randint
+
 """Classes for melon orders."""
 
 
@@ -10,15 +12,21 @@ class AbstractMelonOrder():
         self.shipped = False
         # self.country_code = country_code
 
+    def get_base_price(self):
+        """sets splurge pricing mechanism"""
+        
+        return randint(5,9)
+
     def get_total(self):
         """Calculate price, including tax."""
     
-        base_price = 5
+        # base_price = 5
+        self.base_price = self.get_base_price()
 
         if self.species == "christmas melon":
-            base_price *= 1.5
+            self.base_price *= 1.5
 
-        total = (1 + self.tax) * self.qty * base_price
+        total = (1 + self.tax) * self.qty * self.base_price
 
         print(f"${total:.2f}")
 
@@ -28,6 +36,7 @@ class AbstractMelonOrder():
         """Record the fact than an order has been shipped."""
 
         self.shipped = True
+
 
 
 class DomesticMelonOrder(AbstractMelonOrder):
